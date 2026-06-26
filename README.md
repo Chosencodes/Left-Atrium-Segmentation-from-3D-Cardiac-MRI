@@ -2,8 +2,7 @@
 
 > End-to-end 3D medical image segmentation pipeline for automatic left atrium delineation from cardiac MRI using a 3D Residual UNet.
 
-
-![Left Atrium Segmentation](assets/atrium_segmentation.gif)
+![Left Atrium Segmentation](Assets/atrium_segmentation.gif)
 
 ---
 
@@ -24,7 +23,7 @@
 
 ## Sample Predictions
 
-![Best Predictions](assets/best_predictions.png)
+![Best Predictions](Assets/best_predictions.png)
 
 *Red overlay = segmented left atrium. Green = ground truth.*
 
