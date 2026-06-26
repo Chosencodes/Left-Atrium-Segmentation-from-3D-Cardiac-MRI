@@ -211,13 +211,5 @@ atrium-segmentation/
 
 ---
 
-## Author
-
-**Chosen Otabor**
-Medical AI Researcher | ALX Backend Engineering
-- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/YOUR_PROFILE)
-
----
 
 *Built as part of a medical imaging AI research portfolio.*
