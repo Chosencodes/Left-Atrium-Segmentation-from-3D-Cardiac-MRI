@@ -48,7 +48,7 @@ Preprocessing (torchio)
   - CropOrPad (208 × 208 × 128)
   - Z-Normalization
   - Clamp (−3, 3)
-  - RescaleIntensity (0, 1)
+  - Rtio.RescaleIntensity(percentiles=(0, 100))
       ↓
 Augmentation (train only)
   - RandomFlip
@@ -57,7 +57,7 @@ Augmentation (train only)
       ↓
 3D Residual UNet (MONAI)
   - 3D convolutions — sees full volume
-  - Channels: (16, 32, 64, 128, 256)
+  - Channels: (16, 32, 64, 128, 256,512)
   - 4 downsampling levels
   - Skip connections
       ↓
@@ -77,7 +77,7 @@ Evaluation
 The model uses MONAI's 3D Residual UNet — a full volumetric architecture that processes the entire 3D MRI volume at once, preserving spatial context across all depth slices.
 
 ```
-Input (1, 208, 208, 128)
+Input (1, 208, 208, 128,512)
         ↓
   Encoder (↓)          Decoder (↑)
   Conv 1→16    ─────►  Cat + Conv 256+128→128
@@ -86,7 +86,7 @@ Input (1, 208, 208, 128)
   Conv 64→128  ─────►  Cat + Conv 32+16→16
   Conv 128→256
         ↓
-  Output (1, 208, 208, 128) — binary atrium mask
+  Output (1, 208, 208, 128,512) — binary atrium mask
 ```
 
 Key design choices:
@@ -104,21 +104,11 @@ Key design choices:
 | Loss function | MONAI DiceLoss (sigmoid=True) |
 | Optimizer | Adam (lr=1e-4) |
 | LR Scheduler | ReduceLROnPlateau (factor=0.5, patience=5) |
-| Epochs | 100 |
+| Epochs | 150 |
 | Batch size | 1 |
 | Precision | 16-bit mixed (fp16) |
 | Early stopping | patience=15 |
 | Framework | PyTorch Lightning |
-
----
-
-## Installation
-
-```bash
-git clone https://github.com/YOUR_USERNAME/atrium-segmentation.git
-cd atrium-segmentation
-pip install -r requirements.txt
-```
 
 ---
 
@@ -145,24 +135,6 @@ celluloid
 ```
 http://medicaldecathlon.com → Task02_Heart
 ```
-
-**2. Update paths in preprocessing.py**
-```python
-root  = Path("path/to/Task02_Heart/imagesTr")
-label = Path("path/to/Task02_Heart/labelsTr")
-```
-
-**3. Run preprocessing and training**
-```bash
-python train.py
-```
-
-**4. Evaluate**
-```bash
-python evaluate.py --checkpoint path/to/best-model.ckpt
-```
-
----
 
 ## Project Structure
 
